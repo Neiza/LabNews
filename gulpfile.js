@@ -3,8 +3,8 @@ var sass = require('gulp-sass');
 var browsefiry = require('gulp-browserify');
 var rename = require('gulp-rename');
 var browserSync = require('browser-sync').create();
-// var concat = require('gulp-concat');
-// var jquery = require('jquery');
+var nodemon = require('gulp-nodemon');
+var concat = require('gulp-concat');
 //  https://www.npmjs.com/package/run-sequence    to run all at the same tim
 
 
@@ -29,7 +29,8 @@ var paths = {
   c6opinion: "js/components/**/*.js",
   c7slide: "js/components/**/*.js",
   c8footer: "js/components/**/*.js",
-  c9newsdetails: "js/components/**/*.js"
+  c9newsdetails: "js/components/**/*.js",
+  img: "img/**/*.png"
 };
 
 var sources = {
@@ -48,7 +49,8 @@ var sources = {
   rootc6: config.source + paths.assets + paths.c6opinion,
   rootc7: config.source + paths.assets + paths.c7slide,
   rootc8: config.source + paths.assets + paths.c8footer,
-  rootc9: config.source + paths.assets + paths.c9newsdetails
+  rootc9: config.source + paths.assets + paths.c9newsdetails,
+  rootImg: config.source + paths.assets + paths.img
 };
 
 gulp.task('html', () => {
@@ -64,8 +66,8 @@ gulp.task("sass", () =>{
 });
 
 gulp.task("js", () => {
-  gulp.src(sources.rootJS)
-    // .pipe(concat(sources.rootJS))
+  gulp.src([sources.components, sources.rootJS])
+    .pipe(concat("new.js"))
     .pipe(browsefiry())
     .pipe(rename("bundle.js"))
     .pipe(gulp.dest(config.dist + paths.assets + "js"));
@@ -77,34 +79,54 @@ gulp.task("components", () => {
     .pipe(gulp.dest(config.dist + paths.assets + "js/components"))
 });
 
-gulp.task("sass-watch", ["sass"], (done) => {
-  browserSync.reload();
-  done();
+gulp.task('img', () =>{
+  gulp.src(sources.rootImg).pipe(gulp.dest(config.dist + paths.assets + "img"));
 });
 
-gulp.task("js-watch", ["js"], (done) => {
-  browserSync.reload();
-  done();
-});
+// gulp.task("sass-watch", ["sass"], (done) => {
+//   browserSync.reload();
+//   done();
+// });
+//
+// gulp.task("js-watch", ["js"], (done) => {
+//   browserSync.reload();
+//   done();
+// });
+//
+// gulp.task("html-watch", ["html"], (done) => {
+//   browserSync.reload();
+//   done();
+// });
+//
+// gulp.task("components-watch", ["components"], (done) => {
+//   browserSync.reload();
+//   done();
+// });
+//
+// gulp.task("img-watch", ["img"], (done) => {
+//   browserSync.reload();
+//   done();
+// });
+// gulp.task('browserSync', function () {
+//     browserSync.init({
+//         port: 5000, // you can specify the port here
+//               // can't use the same port that nodemon uses.
+//         proxy: {
+//             target: 'localhost:3006', // original port
+//             ws: true // enables websockets
+//         }
+//     });
+// });
 
-gulp.task("html-watch", ["html"], (done) => {
-  browserSync.reload();
-  done();
-});
-
-gulp.task("components-watch", ["components"], (done) => {
-  browserSync.reload();
-  done();
-});
-
-gulp.task("serve", () => {
-  browserSync.init({
-    server:{
-      baseDir:config.dist
-    }
-  });
-  gulp.watch(sources.html,["html-watch"]);
-  gulp.watch(sources.sass, ["sass-watch"]);
-  gulp.watch(sources.js, ["js-watch"]);
-  gulp.watch(sources.components, ["components-watch"]);
-});
+// gulp.task("serve", () => {
+//   browserSync.init({
+//     server:{
+//       baseDir:config.dist
+//     }
+//   });
+//   gulp.watch(sources.html,["html-watch"]);
+//   gulp.watch(sources.sass, ["sass-watch"]);
+//   gulp.watch(sources.js, ["js-watch"]);
+//   gulp.watch(sources.components, ["components-watch"]);
+//   gulp.watch(sources.rootImg, ["img-watch"]);
+// });
