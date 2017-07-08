@@ -1,8 +1,5 @@
-$primary-color: #ebb85d;
-$secondary-color: #3e3f40;
-$text-colorPrimary: white;
-$text-colorSecondary: black;
+@import "colors"
 
 .root{
-  color: $secondary-color;
+  color: $footernav-color;
 }

@@ -10,11 +10,18 @@ const Header = () => {
   const logoContainer = $('<div class="header__elem header__elem--logo "></div>');
   const imgLogo = $('<img src="assets/img/logoicon.png" alt="" class="header__logo">');
   const date = $('<span class="header__date">Lunes Junio, 12 de 20017</span>');
-  const weather = $('<img src="assets/img/cloud.png" alt="" class="header__logo"><span class="header__weather"></span>');
+  const weather = $('<img src="assets/img/cloud.png" alt="" class="header__logo"><span class="header__weather">22°</span>');
 
   const nav = $('<div class="header__elem header__elem--nav "></div>');
   const loUltimo = $('<a href="" class="header__navElem">Lo último</a>');
   const opinion = $('<a href="" class="header__navElem">Opinión</a>');
+  const cultura = $('<a href="" class="header__navElem">Cultura</a>');
+  const peru = $('<a href="" class="header__navElem">Perú</a>');
+  const tecnologia = $('<a href="" class="header__navElem">Tecnología</a>');
+  const mundo = $('<a href="" class="header__navElem">Mundo</a>');
+  const economia = $('<a href="" class="header__navElem">Economía</a>');
+  const lifestyle = $('<a href="" class="header__navElem">Lifestye</a>');
+  const deporte = $('<a href="" class="header__navElem">Deporte</a>');
 
   header.append(head);
   header.append(logoContainer);
@@ -30,7 +37,14 @@ const Header = () => {
 
   nav.append(loUltimo);
   nav.append(opinion);
-  // nav.append();
+  nav.append(cultura);
+  nav.append(peru);
+  nav.append(tecnologia);
+  nav.append(mundo);
+  nav.append(economia);
+  nav.append(lifestyle);
+  nav.append(deporte);
+
 
   return header;
 
@@ -40,13 +54,33 @@ const Header = () => {
 
 const LoUltimo = () => {
   const loUltimoSection = $('<section class="loultimo"></section>');
-  const principalNews = $('<div class="loultimo__principal"><img src="" alt="" class="loultimo__img--principal"><span class="loultimo__newstitle loultimo__newstitle--principal"></span></div>');
-  const secondaryNews = $('<div class="loultimo__secundary"><img src="" alt="" class="loultimo__img--secondary"><span class="loultimo__newstitle loultimo__newstitle--secondary"></span></div>');
 
-  loUltimoSection.append(principalNews);
-  loUltimoSection.append(secondaryNews);
+   $.each(state.news, function (i, element) {
+    console.log( ('<img src="assets/img/news/' + element.img + ' "alt="" class="loultimo__img">'));
+    const newsContainer = $('<div class="loultimo__news"></div>');
+    const img = $('<img src="assets/img/news/' + element.img + ' "alt="" class="loultimo__img">');
+    const titleContainer = $('<div class="loultimo__titleCont"></div>');
+    const title = $('<span class="loultimo__title">'+ element.title + '</span>');
 
-  return loUltimoSection;
+
+    newsContainer.append(img);
+    titleContainer.append(title);
+    newsContainer.append(titleContainer);
+    loUltimoSection.append(newsContainer);
+
+});
+
+const imgP = $('<img src="assets/img/news/' + state.news[0].img + ' "alt="" class="loultimo__img">');
+imgP.on('click', () => {
+    const root = $('.root');
+    root.empty();
+    root.append(Header());
+    root.append(NewsDetail());
+    root.append(Footer());
+ });
+
+return loUltimoSection;
+
 }
 
 
@@ -55,7 +89,37 @@ const LoUltimo = () => {
 
 
 
+"use strict";
+ const Footer = () => {
+   const footerContainer = ('<div class="footer"></div>');
 
+   return footerContainer;
+ }
+
+"use strict";
+const NewsDetail = () => {
+  const divContainer = ('<div class="detail"></div>');
+  const title = ('<span class="detail__title">'+ state.news.title +'</span>');
+  const brief = ('<span class="detail__brief">'+ state.news.brief +'</span>')
+  const img = ('<img class="detail__img" src="assets/img/news/' + state.news.img + ' "alt="">');
+  const author = ('<div class="detail__author"></div>');
+  const imgAuthor = ('<img class="detail__author--img" src="" alt="">');
+  const name = ('<span class="detail__name">'+ state.news.author.name+'</span>');
+  const date = ('<span class="detail__date">22.06.17 12:26 pm</span>');
+  const email = ('<span class="detail__email">@photosynthetica</span>');
+  const text = ('<p class="detail__text">'+state.news.body+'</p>');
+
+  divContainer.append(title);
+  divContainer.append(brief);
+  divContainer.append(img);
+  divContainer.append(author);
+  divContainer.append(text);
+  author.append(imgAuthor);
+  author.append(date);
+  author.append(email);
+
+  return divContainer
+}
 
 "use strict";
 const render = (root) => {
@@ -76,7 +140,7 @@ const state = {
 $( _ => {
   $.get("api/news", (json) => {
     alert("see");
-    state.datos = json;
+    state.news = json;
     console.log(json);
     const root = $('.root');
     render(root);

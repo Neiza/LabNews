@@ -17,7 +17,7 @@ const state = {
 $( _ => {
   $.get("api/news", (json) => {
     alert("see");
-    state.datos = json;
+    state.news = json;
     console.log(json);
     const root = $('.root');
     render(root);
