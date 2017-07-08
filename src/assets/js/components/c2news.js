@@ -1,6 +1,6 @@
 "use strict";
 
-const LoUltimo = () => {
+const News = () => {
   const loUltimoSection = $('<section class="loultimo"></section>');
 
    $.each(state.news, function (i, element) {
@@ -18,8 +18,7 @@ const LoUltimo = () => {
 
 });
 
-const imgP = $('<img src="assets/img/news/' + state.news[0].img + ' "alt="" class="loultimo__img">');
-imgP.on('click', () => {
+loUltimoSection.on('click', () => {
     const root = $('.root');
     root.empty();
     root.append(Header());

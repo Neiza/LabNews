@@ -1,5 +1,20 @@
-@import "colors"
+@import "__colors";
 
-.root{
-  color: $footernav-color;
+.loultimo__titleCont{
+  background-color: $titles-color;
+  color: $text-colorPrimary;
+}
+
+a{text-decoration: overline;
+  color: $text-colorPrimary;
+  background-color: $text-colorSecondary;
+}
+
+.footer{
+  background-color: $footernav-color;
+  color: $text-colorPrimary;
+}
+
+.loultimo__img{
+  cursor: pointer;
 }

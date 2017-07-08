@@ -2,8 +2,8 @@
 const render = (root) => {
   const wrapper = $('<div class="wrapper"></div>');
   wrapper.append(Header());
-  wrapper.append(LoUltimo());
-
+  wrapper.append(News());
+  wrapper.append(Footer());
   root.append(wrapper);
 }
 

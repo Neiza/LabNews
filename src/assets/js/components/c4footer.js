@@ -1,6 +1,6 @@
 "use strict";
  const Footer = () => {
-   const footerContainer = ('<div class="footer"></div>');
+   const footerContainer = $('<div class="footer"></div>');
 
    return footerContainer;
  }
